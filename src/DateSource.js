@@ -8,16 +8,17 @@ import {action, observable} from 'mobx';
 import GroupState from './GroupState';
 
 export default class DateSource {
-    @observable groups = [];
+    @observable groups = []
+
+    scrollTop = 0
 
     constructor(value = []) {
         this.value = value;
         this.start = 0;
     }
 
-    bindRowOptions(rowHeight, rowsInGroup) {
-        this.rowHeight = rowHeight;
-        this.rowsInGroup = rowsInGroup;
+    set(options) {
+        Object.assign(this, options)
     }
 
     @action
@@ -29,7 +30,8 @@ export default class DateSource {
                     id: hashIndex,
                     top: this.groups[hashIndex - 1]
                         ? this.groups[hashIndex - 1].top + this.groups[hashIndex - 1].height
-                        : 0
+                        : 0,
+                    scrollTop: this.scrollTop
                 });
             }
 
@@ -59,6 +61,7 @@ export default class DateSource {
     }
 
     @action updateScrollTop(scrollTop) {
+        this.scrollTop = scrollTop;
         this.groups.forEach(group => {
             group.update({
                 scrollTop

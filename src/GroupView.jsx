@@ -23,14 +23,22 @@ class GroupView extends Component {
 
     static defaultProps = {};
 
-    componentDidMount() {
+    updateHeight() {
         if (!this.props.store.height) {
             this.props.updateHeight(this.props.store.id, this.element.offsetHeight);
         }
     }
 
+    componentDidMount() {
+        this.updateHeight()
+    }
+
+    componentDidUpdate() {
+        this.updateHeight()
+    }
+
     render() {
-         if (!this.props.store.height) {
+        if (this.props.store.inView) {
             return (
                 <div ref={ref => { this.element = ref }}>
                     {
@@ -40,17 +48,7 @@ class GroupView extends Component {
                 </div>
             )
         }
-        if (this.props.store.inView) {
-            return (
-                <div>
-                    {
-                        this.props.store.data.map(data =>
-                            this.props.rowRenderer(data))
-                    }
-                </div>
-            )
-        }
-        return <div style={{height: `${this.props.store.height}px`}} />
+        return <div style={{height: `${this.props.store.height}px`}}/>
     }
 }
 

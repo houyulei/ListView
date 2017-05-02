@@ -13,10 +13,10 @@ export default class GroupState {
 
     @computed get inView() {
         if (this.height) {
-            return this.scrollTop < -this.top + 2000
-                && this.scrollTop > -this.top - this.height - 2000
+            return this.scrollTop < -this.top + 1000
+                && this.scrollTop > -this.top - this.height - 1000
         }
-        return false
+        return true
     }
 
     constructor(prop) {

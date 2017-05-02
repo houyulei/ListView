@@ -2,7 +2,11 @@
 
 ## 介绍
 
-长列表组件
+无限滚动长列表,基于silk-scroller和mobx
+
+[demo](https://jingoal-silk.github.io/ListView/dist/index.html)
+
+原理是将列表分为若干组(建议设置rowsInGroup参数保证每组大约占1屏半的高度),实时判断每组是否在可视区域,如在则显示该组,如不在则渲染一个等高占位容器撑开高度.
 
 ## 安装
 
@@ -16,7 +20,7 @@ $ npm install silk-listview --save
 import ListView,{DateSource} from 'silk-listview';
 
 const data = [];
-for (let i = 0; i < 3000; i++) {
+for (let i = 0; i < 300; i++) {
     data.push(i);
 }
 const dataSource = new DateSource(data);
@@ -83,21 +87,26 @@ ReactDOM.render(
 
 | Property             | Description           | Type       | Default       |
 |---------------- |----------------|----------|----------|
-| dateSource         |    |  |   |
-| rowHeight         |    |  |   |
-| partitionSize         |      |  |   |
-| scrollTop         |    |  |   |
-| rowRenderer         |     | |   |
+| dateSource         |  数据源,一个mobx对象, 当其变更时,列表会自动渲染 |  |   |
+| rowHeight         |  行高,设定行高会有更好的性能,不设定会自动计算  | number |   |
+| rowsInGroup         |   分组行数   | number |  50 |
+| scrollTop         |  初始滚动  | number | 0 |
+| rowRenderer         |   行渲染函数  | function |   |
 
 
 
 
 ### dateSource
 
-dataSource.append
+#### constructor(data arr)
+创建一个DateSource实例,参数通常为Array[Object]类型的初始数据
 
-dataSource.replace
+#### dataSource.append(data arr)
+向列表尾部添加数据,参数通常为Array[Object]类型的数据
 
-dataSource.clear
+#### dataSource.replace(data arr)
+替换列表数据,会造成重新render,参数通常为Array[Object]类型的数据
 
+#### dataSource.clear()
+清空列表数据
 

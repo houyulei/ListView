@@ -11,7 +11,7 @@ import ListView, {DateSource} from '../src/index';
 import './basic.scss';
 
 const data = [];
-for (let i = 0; i < 3000; i++) {
+for (let i = 0; i < 300; i++) {
     data.push(i);
 }
 const dataSource = new DateSource(data);
@@ -41,21 +41,23 @@ class ListViewExample extends Component {
     }
 
     loadMore = (resolve) => {
-        const arr = [];
-        for (let i = dataSource.value.length, len = dataSource.value.length + 15;
-             i < len; i++) {
-            arr.push(i);
-        }
+        setTimeout(() => {
+            const arr = [];
+            for (let i = dataSource.value.length, len = dataSource.value.length + 15;
+                 i < len; i++) {
+                arr.push(i);
+            }
 
-        dataSource.append(arr)
-        resolve();
+            dataSource.append(arr)
+            resolve();
+        }, 500)
     }
 
     render() {
         return (
             <ListView
                 dataSource={dataSource}
-                rowRenderer={item => <div key={item} className="list-view-item">上拉下拉{item + 1}</div>}
+                rowRenderer={item => <div key={item} className="list-view-item">item{item + 1}</div>}
                 usePullRefresh
                 pullRefreshAction={this.refresh}
                 useLoadMore

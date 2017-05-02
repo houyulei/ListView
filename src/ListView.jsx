@@ -31,21 +31,25 @@ class ListView extends Component {
         /**
          * 分组大小
          */
-        partitionSize: PropTypes.number,
+        rowsInGroup: PropTypes.number,
         scrollTop: PropTypes.number,
         rowRenderer: PropTypes.func,
         dataSource: PropTypes.object // eslint-disable-line react/forbid-prop-types
     }
 
     static defaultProps = {
-        partitionSize: 50,
+        rowsInGroup: 50,
         scrollTop: 0
     };
 
     constructor(props) {
         super(props);
 
-        this.props.dataSource.bindRowOptions(this.props.rowHeight, this.props.partitionSize);
+        this.props.dataSource.set({
+            rowHeight: this.props.rowHeight,
+            rowsInGroup: this.props.rowsInGroup,
+            scrollTop: this.props.scrollTop
+        });
         this.props.dataSource.generate();
 
         this.updateScrollTop = throttle((evt) => {
@@ -62,7 +66,7 @@ class ListView extends Component {
     render() {
         const {
             rowHeight,
-            partitionSize,
+            rowsInGroup,
             scrollTop,
             rowRenderer,
             dataSource,
