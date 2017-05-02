@@ -4,7 +4,7 @@
 
 无限滚动长列表,基于silk-scroller和mobx
 
-[demo](https://jingoal-silk.github.io/ListView/dist/index.html)
+[demo](https://houyulei.github.io/ListView/dist/index.html)
 
 原理是将列表分为若干组(建议设置rowsInGroup参数保证每组大约占1屏半的高度),实时判断每组是否在可视区域,如在则显示该组,如不在则渲染一个等高占位容器撑开高度.
 
